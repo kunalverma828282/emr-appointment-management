@@ -2,29 +2,26 @@
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import os
-import traceback # <-- ADD THIS IMPORT
+# import os # You can remove this import now, or keep it.
+
 from appointment_service import (
     get_appointments,
     update_appointment_status
 )
 
 app = Flask(__name__)
-# --- CORS Configuration ---
-# Get the deployed Vercel URL from the environment variable.
-# Fallback to localhost is only used if the env var is completely missing.
-VERCEL_ORIGIN = os.environ.get("https://emr-appointment-management.vercel.app")
 
-# Define the origins that are allowed. 
-# We add both Vercel URL (if it exists) and the localhost fallback.
-allowed_origins = ["http://localhost:3000"]
-if VERCEL_ORIGIN:
-    allowed_origins.append(VERCEL_ORIGIN)
+# --- FINAL HARDCODE CORS FIX ---
+# Replace the placeholder URL below with your EXACT VERCEL URL.
+# This prevents the NoneType error in flask_cors core.py
+VERCEL_LIVE_URL = "https://emr-appointment-management.vercel.app" # <--- YOUR VERCEL URL HERE
 
-CORS(app, supports_credentials=True, origins=allowed_origins) 
-# --------------------------
-# Configure CORS to explicitly allow requests ONLY from your Vercel URL
-CORS(app, supports_credentials=True, origins=[VERCEL_ORIGIN])
+CORS(
+    app,
+    supports_credentials=True,
+    origins=[VERCEL_LIVE_URL, "http://localhost:3000"] 
+)
+# -------------------------------
 # -----------------------------
 # Health Check
 # -----------------------------
