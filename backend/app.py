@@ -9,10 +9,21 @@ from appointment_service import (
 )
 
 app = Flask(__name__)
-V_URL = os.environ.get("https://emr-appointment-management.vercel.app/", "http://localhost:3000")
+# --- CORS Configuration ---
+# Get the deployed Vercel URL from the environment variable.
+# Fallback to localhost is only used if the env var is completely missing.
+VERCEL_ORIGIN = os.environ.get("https://emr-appointment-management.vercel.app/")
 
+# Define the origins that are allowed. 
+# We add both Vercel URL (if it exists) and the localhost fallback.
+allowed_origins = ["http://localhost:3000"]
+if VERCEL_ORIGIN:
+    allowed_origins.append(VERCEL_ORIGIN)
+
+CORS(app, supports_credentials=True, origins=allowed_origins) 
+# --------------------------
 # Configure CORS to explicitly allow requests ONLY from your Vercel URL
-CORS(app, supports_credentials=True, origins=[V_URL])
+CORS(app, supports_credentials=True, origins=[VERCEL_ORIGIN])
 # -----------------------------
 # Health Check
 # -----------------------------
