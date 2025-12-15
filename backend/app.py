@@ -3,6 +3,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import os
+import traceback # <-- ADD THIS IMPORT
 from appointment_service import (
     get_appointments,
     update_appointment_status
@@ -12,7 +13,7 @@ app = Flask(__name__)
 # --- CORS Configuration ---
 # Get the deployed Vercel URL from the environment variable.
 # Fallback to localhost is only used if the env var is completely missing.
-VERCEL_ORIGIN = os.environ.get("https://emr-appointment-management.vercel.app/")
+VERCEL_ORIGIN = os.environ.get("https://emr-appointment-management.vercel.app")
 
 # Define the origins that are allowed. 
 # We add both Vercel URL (if it exists) and the localhost fallback.
@@ -27,7 +28,11 @@ CORS(app, supports_credentials=True, origins=[VERCEL_ORIGIN])
 # -----------------------------
 # Health Check
 # -----------------------------
-
+@app.errorhandler(500)
+def internal_error(exception):
+   app.logger.error(traceback.format_exc())
+   return "Internal Server Error", 500
+# -----------------------------------
 @app.route("/health", methods=["GET"])
 def health_check():
     return jsonify({"status": "Backend is running"})
