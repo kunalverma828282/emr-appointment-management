@@ -20,7 +20,7 @@ function App() {
   }, []);
 
   const fetchAppointments = (date = "") => {
-    let url = "http://127.0.0.1:5000/appointments";
+    let url = "https://emr-backend-api.onrender.com/appointments";
     if (date) url += `?date=${date}`;
 
     fetch(url)
@@ -66,7 +66,7 @@ function App() {
 
   /* ---------------- STATUS UPDATE ---------------- */
   const updateStatus = (id, status) => {
-    fetch(`http://127.0.0.1:5000/appointments/${id}`, {
+    fetch(`https://emr-backend-api.onrender.com/appointments/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status }),
