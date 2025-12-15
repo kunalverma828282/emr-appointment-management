@@ -2,15 +2,17 @@
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-
+import os
 from appointment_service import (
     get_appointments,
     update_appointment_status
 )
 
 app = Flask(__name__)
-CORS(app)  # Allow requests from frontend (React)
+V_URL = os.environ.get("https://emr-appointment-management.vercel.app/", "http://localhost:3000")
 
+# Configure CORS to explicitly allow requests ONLY from your Vercel URL
+CORS(app, supports_credentials=True, origins=[V_URL])
 # -----------------------------
 # Health Check
 # -----------------------------
