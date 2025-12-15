@@ -7,12 +7,9 @@ The application allows users to view, filter, update, and manage patient appoint
 
 ## 🚀 Live Demo
 
-🔗 **Live Application:**  
-(Replace with your deployed link)  
-https://your-app-name.vercel.app
+Live Frontend URL (Vercel): https://emr-appointment-management.vercel.app
 
-🔗 **Backend API (Local):**  
-http://127.0.0.1:5000
+Live Backend URL (Render): https://emr-backend-api.onrender.com
 
 ---
 
