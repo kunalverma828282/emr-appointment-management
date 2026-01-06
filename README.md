@@ -228,5 +228,4 @@ Styling: Tailwind utility classes
 
 👤 Author
 
-Kunal
-SDE Intern Candidate
+Kunal Verma
